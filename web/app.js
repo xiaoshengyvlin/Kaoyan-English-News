@@ -203,7 +203,11 @@ function bindVocab() {
           var lines = '';
           for (var wc in defs) {
             if (defs.hasOwnProperty(wc)) {
-              lines += '<div><b>' + esc(wc) + '</b> ' + esc(defs[wc].join(', ')) + '</div>';
+              var text = esc(defs[wc].join(', '));
+              var subwcs = wc.split(/\s+/);
+              for (var j = 0; j < subwcs.length; j++) {
+                lines += '<div><b>' + esc(subwcs[j]) + '</b> ' + text + '</div>';
+              }
             }
           }
           pop.innerHTML = lines;
