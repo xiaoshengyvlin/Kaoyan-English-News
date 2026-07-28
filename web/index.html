@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Zako的烤盐英语新闻</title>
 <link rel="icon" href="/static/icon.ico">
-<link rel="stylesheet" href="/static/style.css?v=50">
+<link rel="stylesheet" href="/static/style.css?v=51">
 </head>
 <body>
 
@@ -29,6 +29,7 @@
 <div class="mainarea">
   <header class="header">
     <div class="header-left">
+      <button class="hamburger" id="hamburger" aria-label="菜单">&#9776;</button>
       <span class="header-day" id="headerDate"></span>
     </div>
     <div class="header-right">
@@ -42,6 +43,8 @@
       </div>
     </div>
   </header>
+
+  <div class="overlay" id="overlay" hidden></div>
 
   <div class="loading" id="loading" hidden>
     <div class="lds-spinner"><div></div><div></div><div></div></div>
@@ -65,6 +68,6 @@
 
 <div class="vocab-pop" id="vocabPop" hidden></div>
 
-<script src="/static/app.js?v=50"></script>
+<script src="/static/app.js?v=51"></script>
 </body>
 </html>

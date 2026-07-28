@@ -160,6 +160,8 @@ function showArticles(arts) {
 
 function bindSide() {
   var items = document.querySelectorAll('.side-item');
+  var sidebar = safeGet('sidebar');
+  var overlay = safeGet('overlay');
   for (var i = 0; i < items.length; i++) {
     (function(item) {
       item.addEventListener('click', function() {
@@ -169,6 +171,9 @@ function bindSide() {
           if (h2) h2.scrollIntoView({ behavior: 'smooth', block: 'start' });
           else art.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        // mobile: close sidebar after navigation
+        if (sidebar) sidebar.classList.remove('open');
+        if (overlay) { overlay.classList.remove('show'); overlay.hidden = true; }
       });
     })(items[i]);
   }
@@ -234,6 +239,23 @@ function setupUI() {
     });
   }
   window.addEventListener('scroll', onScroll);
+
+  // mobile: hamburger toggle
+  var hamburger = safeGet('hamburger');
+  var sidebar = safeGet('sidebar');
+  var overlay = safeGet('overlay');
+  if (hamburger && sidebar && overlay) {
+    hamburger.addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+      overlay.hidden = !overlay.classList.contains('show');
+    });
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      overlay.hidden = true;
+    });
+  }
 }
 
 function render() {

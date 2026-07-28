@@ -253,17 +253,46 @@ main { flex: 1; padding: 40px 0 80px }
 }
 .statbar b { color: var(--red); font-size: 16px; margin-right: 4px }
 
+/* === hamburger === */
+.hamburger {
+  display: none;
+  background: none; border: none; cursor: pointer;
+  font-size: 22px; color: var(--t); padding: 2px 6px;
+  line-height: 1;
+}
+
+/* === overlay === */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  z-index: 90; display: none;
+}
+.overlay.show { display: block }
+
 /* === mobile === */
 @media (max-width: 860px) {
-  .sidebar { display: none }
+  .hamburger { display: inline-block }
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0; z-index: 110;
+    transform: translateX(-100%); transition: transform .25s ease;
+  }
+  .sidebar.open { transform: translateX(0) }
+  .sidebar-top { padding: 14px 14px }
+  .side-item { font-size: 14px; padding: 10px 12px }
   .mainarea { margin-left: 0 }
   .progress { left: 0 }
-  .header { padding: 10px 16px }
-  .art { margin: 0 16px 48px }
+  .header { padding: 8px 12px; gap: 6px; flex-wrap: wrap }
+  .header-left { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px }
+  .header-day { font-size: 13px }
+  .header-right { gap: 6px }
+  .date-ctl select { font-size: 12px; padding: 4px 6px }
+  .size-ctl button { width: 24px; height: 24px; font-size: 11px }
+  .art { margin: 0 12px 40px }
   .sentence-row { flex-direction: column; gap: 4px }
-  .sentence-en, .sentence-zh { padding: 6px 0 }
-  .art-col-label { flex-direction: column; gap: 4px }
-  .art-head h2 { font-size: 17px }
+  .sentence-en, .sentence-zh { padding: 4px 0; font-size: 14px }
+  .art-col-label { flex-direction: column; gap: 2px; font-size: 10px }
+  .art-head h2 { font-size: 16px }
   body { --fs: 15px }
-  .statbar { gap: 16px }
+  .statbar { gap: 12px; font-size: 12px }
+  .statbar b { font-size: 14px }
+  .vocab-pop { max-width: 200px; font-size: 12px; padding: 8px 10px }
 }
