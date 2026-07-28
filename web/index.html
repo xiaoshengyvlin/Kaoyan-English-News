@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zako的烤盐英语新闻</title>
+<link rel="icon" href="/static/icon.ico">
+<link rel="stylesheet" href="/static/style.css?v=50">
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <a class="logo" href="/">
+      <img src="/static/icon.ico" width="22" height="22" alt="">
+      <span>Zako的烤盐英语新闻</span>
+    </a>
+  </div>
+  <div class="sidebar-info">
+    <span class="sidebar-info-num" id="sideCount">0</span> 篇
+  </div>
+  <nav class="side-nav" id="sideNav"></nav>
+</aside>
+
+<div class="mainarea">
+  <header class="header">
+    <div class="header-left">
+      <span class="header-day" id="headerDate"></span>
+    </div>
+    <div class="header-right">
+      <div class="date-ctl">
+        <select id="dateSelect"></select>
+      </div>
+      <div class="size-ctl" id="sizeCtl">
+        <button data-s="15">A</button>
+        <button data-s="17" class="on">A</button>
+        <button data-s="19">A</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="loading" id="loading" hidden>
+    <div class="lds-spinner"><div></div><div></div><div></div></div>
+    <span>加载中</span>
+  </div>
+
+  <main id="main">
+    <div class="empty" id="empty" hidden>
+      <span class="empty-ico">&#128214;</span>
+      <h3>暂无文章</h3>
+      <p>请运行每日抓取任务生成内容</p>
+    </div>
+  </main>
+
+  <footer class="statbar" id="statbar" hidden>
+    <span><b id="stVocab">0</b> 考研词</span>
+    <span><b id="stWords">0</b> 总词数</span>
+    <span><b id="stArts">0</b> 篇</span>
+  </footer>
+</div>
+
+<div class="vocab-pop" id="vocabPop" hidden></div>
+
+<script src="/static/app.js?v=50"></script>
+</body>
+</html>

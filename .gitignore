@@ -1,0 +1,25 @@
+# 敏感信息
+config.yaml
+
+# 生成数据（每日产出，不提交）
+data/raw/
+data/articles/
+data/translate/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# 环境
+.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# 系统
+.DS_Store
+Thumbs.db

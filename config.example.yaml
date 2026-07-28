@@ -1,0 +1,41 @@
+deepseek:
+  api_key: "your-deepseek-api-key-here"
+  base_url: "https://api.deepseek.com"
+  model: "deepseek-v4-flash"
+
+news_radar:
+  api_url: "https://news.learnprompt.pro/data/latest-24h.json"
+  english_sources:
+    - official_ai
+    - curated_media
+    - hackernews
+    - techurls
+    - zeli
+    - iris
+    - buzzing
+    - newsnow
+    - aihot
+    - opmlrss
+
+rss:
+  bbc: "https://feeds.bbci.co.uk/news/rss.xml"
+  guardian: "https://www.theguardian.com/world/rss"
+
+allocation:
+  total: 10
+  radar: 6
+  bbc: 2
+  guardian: 2
+
+content:
+  min_word_count: 300
+  max_word_count: 1500
+
+storage:
+  articles_dir: "data/articles"
+  raw_dir: "data/raw"
+  vocab_path: "data/vocab.json"
+
+server:
+  host: "0.0.0.0"
+  port: 8081
