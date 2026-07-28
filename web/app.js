@@ -187,15 +187,27 @@ function bindVocab() {
     (function(v) {
       v.addEventListener('mouseenter', function() {
         var w = v.dataset.word;
-        var defs = (w && vocab[w]) || [];
-        if (!Array.isArray(defs) || defs.length === 0) {
+        var defs = (w && vocab[w]) || {};
+        var keys = Object.keys(defs);
+        if (keys.length === 0) {
           pop.innerHTML = '';
           pop.hidden = false;
           return;
         }
-        var text = defs.join('; ');
-        text = text.replace(/(\S)\s+(?=(vt\.|vi\.|adj\.|adv\.|n\.|prep\.|conj\.|pron\.|int\.|art\.|num\.|aux\.|v\.)\s)/g, '$1<br>');
-        pop.innerHTML = '<span>' + text + '</span>';
+        if (Array.isArray(defs)) {
+          // 兼容旧扁平格式
+          var text = defs.join('; ');
+          text = text.replace(/(\S)\s+(?=(vt\.|vi\.|adj\.|adv\.|n\.|prep\.|conj\.|pron\.|int\.|art\.|num\.|aux\.|v\.)\s)/g, '$1<br>');
+          pop.innerHTML = '<span>' + text + '</span>';
+        } else {
+          var lines = '';
+          for (var wc in defs) {
+            if (defs.hasOwnProperty(wc)) {
+              lines += '<div><b>' + esc(wc) + '</b> ' + esc(defs[wc].join(', ')) + '</div>';
+            }
+          }
+          pop.innerHTML = lines;
+        }
         pop.hidden = false;
       });
       v.addEventListener('mousemove', function(e) {

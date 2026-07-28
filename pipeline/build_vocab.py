@@ -39,19 +39,50 @@ RADICAL_TO_HAN = str.maketrans({
 })
 
 
-def parse_meaning(meaning):
-    meaning = re.sub(r"\([^)]*\)", "", meaning)
-    meaning = re.sub(r"\[[^\]]*\]", "", meaning)
-    meaning = re.sub(r"^\s*&\s*", "", meaning)
-    meaning = re.sub(r"\s+", " ", meaning).strip()
+WC_TOKEN = r"(?:vt|vi|n|adj|adv|prep|conj|pron|int|art|num|aux|v|vlink|det|ord|modal|usage)\."
+WC_GROUP = rf"(?:\s*{WC_TOKEN}\s*)+"
 
-    meanings = []
-    for part in re.split(r"[;；]", meaning):
-        for sub in re.split(r"[，,]", part):
-            sub = sub.strip().rstrip(".")
-            if sub and sub not in meanings:
-                meanings.append(sub)
-    return meanings
+
+def split_meaning(text):
+    """按 ;；,， 切分，但不切括号内的逗号"""
+    parts = []
+    depth = 0
+    current = ""
+    for ch in text:
+        if ch in "（(":
+            depth += 1
+            current += ch
+        elif ch in "）)":
+            depth = max(depth - 1, 0)
+            current += ch
+        elif depth == 0 and ch in ";；,，":
+            s = current.strip().rstrip(".")
+            if s:
+                parts.append(s)
+            current = ""
+        else:
+            current += ch
+    s = current.strip().rstrip(".")
+    if s:
+        parts.append(s)
+    return parts
+
+
+def parse_meaning(meaning):
+    meaning = re.sub(r"\s+", " ", meaning).strip()
+    result = {}
+    matches = list(re.finditer(WC_GROUP, meaning))
+    for i, m in enumerate(matches):
+        wc = m.group().strip()
+        start = m.end()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(meaning)
+        text = meaning[start:end].strip()
+        items = split_meaning(text)
+        existing = result.setdefault(wc, [])
+        for item in items:
+            if item not in existing:
+                existing.append(item)
+    return result if result else {"": [meaning]}
 
 
 def main():
@@ -69,9 +100,11 @@ def main():
         if word not in vocab:
             vocab[word] = meanings
         else:
-            for m in meanings:
-                if m not in vocab[word]:
-                    vocab[word].append(m)
+            for wc, ms in meanings.items():
+                existing = vocab[word].setdefault(wc, [])
+                for m in ms:
+                    if m not in existing:
+                        existing.append(m)
     OUTPUT.write_text(json.dumps(vocab, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Done: {len(vocab)} words")
     for k in list(vocab.keys())[:5]:
